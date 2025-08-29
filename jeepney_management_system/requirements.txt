@@ -1,0 +1,7 @@
+# Core Dependencies (for Phase 1)
+# No external dependencies needed for basic functionality
+
+# Future Dependencies (Phase 2+)
+# flask==2.3.2
+# pandas==2.0.3
+# matplotlib==3.7.2

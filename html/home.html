@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Linear Equations with Intercepts</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+        }
+        .graph-container {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            border: 2px solid #333;
+            margin: 20px 0;
+            background: white;
+            overflow: hidden;
+        }
+        canvas {
+            width: 100%;
+            height: 100%;
+        }
+        .legend {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 10px;
+            background: #f8f9fa;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .legend-line {
+            width: 30px;
+            height: 3px;
+            border-radius: 2px;
+        }
+        .summary {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .equation-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid;
+        }
+        .equation-card h3 {
+            margin: 0 0 15px 0;
+            font-size: 1.2em;
+        }
+        .intercept {
+            margin: 8px 0;
+            font-weight: bold;
+        }
+        .controls {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .toggle-btn {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+        .toggle-btn:hover {
+            background: #0056b3;
+        }
+        .toggle-btn.active {
+            background: #28a745;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Linear Equations with X- and Y-Intercepts</h1>
+        
+        <div class="controls">
+            <button class="toggle-btn active" onclick="toggleLine('a')">Line A: 3x - 2y + 12 = 0</button>
+            <button class="toggle-btn active" onclick="toggleLine('b')">Line B: 5x + 4y - 20 = 0</button>
+            <button class="toggle-btn active" onclick="toggleLine('c')">Line C: y = ½x - 3</button>
+            <button class="toggle-btn active" onclick="toggleIntercepts()">Show Intercepts</button>
+        </div>
+
+        <div class="graph-container">
+            <canvas id="graphCanvas"></canvas>
+        </div>
+
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-line" style="background-color: #e74c3c;"></div>
+                <span>Line A: 3x - 2y + 12 = 0</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-line" style="background-color: #3498db;"></div>
+                <span>Line B: 5x + 4y - 20 = 0</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-line" style="background-color: #2ecc71;"></div>
+                <span>Line C: y = ½x - 3</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-line" style="background-color: #f39c12;"></div>
+                <span>Intercept Points</span>
+            </div>
+        </div>
+
+        <div class="summary">
+            <div class="equation-card" style="border-left-color: #e74c3c;">
+                <h3>a) 3x - 2y + 12 = 0</h3>
+                <div class="intercept">x-intercept: (-4, 0)</div>
+                <div class="intercept">y-intercept: (0, 6)</div>
+            </div>
+            <div class="equation-card" style="border-left-color: #3498db;">
+                <h3>b) 5x + 4y - 20 = 0</h3>
+                <div class="intercept">x-intercept: (4, 0)</div>
+                <div class="intercept">y-intercept: (0, 5)</div>
+            </div>
+            <div class="equation-card" style="border-left-color: #2ecc71;">
+                <h3>c) y = ½x - 3</h3>
+                <div class="intercept">x-intercept: (6, 0)</div>
+                <div class="intercept">y-intercept: (0, -3)</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('graphCanvas');
+        const ctx = canvas.getContext('2d');
+        
+        // Set canvas size
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+        
+        // Graph parameters
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+        const scale = 30; // pixels per unit
+        
+        // Line visibility
+        const visibility = {
+            a: true,
+            b: true,
+            c: true,
+            intercepts: true
+        };
+        
+        // Line data
+        const lines = {
+            a: {
+                color: '#e74c3c',
+                equation: '3x - 2y + 12 = 0',
+                xIntercept: [-4, 0],
+                yIntercept: [0, 6],
+                getY: (x) => (3 * x + 12) / 2
+            },
+            b: {
+                color: '#3498db',
+                equation: '5x + 4y - 20 = 0',
+                xIntercept: [4, 0],
+                yIntercept: [0, 5],
+                getY: (x) => (20 - 5 * x) / 4
+            },
+            c: {
+                color: '#2ecc71',
+                equation: 'y = ½x - 3',
+                xIntercept: [6, 0],
+                yIntercept: [0, -3],
+                getY: (x) => 0.5 * x - 3
+            }
+        };
+
+        function drawGrid() {
+            ctx.strokeStyle = '#e0e0e0';
+            ctx.lineWidth = 1;
+            
+            // Vertical grid lines
+            for (let x = 0; x < canvas.width; x += scale) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+                ctx.stroke();
+            }
+            
+            // Horizontal grid lines
+            for (let y = 0; y < canvas.height; y += scale) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvas.width, y);
+                ctx.stroke();
+            }
+        }
+
+        function drawAxes() {
+            ctx.strokeStyle = '#333';
+            ctx.lineWidth = 2;
+            
+            // X-axis
+            ctx.beginPath();
+            ctx.moveTo(0, centerY);
+            ctx.lineTo(canvas.width, centerY);
+            ctx.stroke();
+            
+            // Y-axis
+            ctx.beginPath();
+            ctx.moveTo(centerX, 0);
+            ctx.lineTo(centerX, canvas.height);
+            ctx.stroke();
+            
+            // Draw axis labels
+            ctx.fillStyle = '#333';
+            ctx.font = '12px Arial';
+            ctx.textAlign = 'center';
+            
+            // X-axis labels
+            for (let i = -10; i <= 10; i++) {
+                if (i !== 0) {
+                    const x = centerX + i * scale;
+                    if (x >= 0 && x <= canvas.width) {
+                        ctx.fillText(i.toString(), x, centerY + 15);
+                        // Tick marks
+                        ctx.beginPath();
+                        ctx.moveTo(x, centerY - 5);
+                        ctx.lineTo(x, centerY + 5);
+                        ctx.stroke();
+                    }
+                }
+            }
+            
+            // Y-axis labels
+            ctx.textAlign = 'right';
+            for (let i = -8; i <= 8; i++) {
+                if (i !== 0) {
+                    const y = centerY - i * scale;
+                    if (y >= 0 && y <= canvas.height) {
+                        ctx.fillText(i.toString(), centerX - 8, y + 4);
+                        // Tick marks
+                        ctx.beginPath();
+                        ctx.moveTo(centerX - 5, y);
+                        ctx.lineTo(centerX + 5, y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            
+            // Origin
+            ctx.textAlign = 'right';
+            ctx.fillText('0', centerX - 8, centerY + 15);
+        }
+
+        function drawLine(lineKey) {
+            if (!visibility[lineKey]) return;
+            
+            const line = lines[lineKey];
+            ctx.strokeStyle = line.color;
+            ctx.lineWidth = 3;
+            
+            ctx.beginPath();
+            let firstPoint = true;
+            
+            // Draw line from left to right of canvas
+            for (let pixelX = 0; pixelX <= canvas.width; pixelX += 2) {
+                const x = (pixelX - centerX) / scale;
+                const y = line.getY(x);
+                const pixelY = centerY - y * scale;
+                
+                if (pixelY >= 0 && pixelY <= canvas.height) {
+                    if (firstPoint) {
+                        ctx.moveTo(pixelX, pixelY);
+                        firstPoint = false;
+                    } else {
+                        ctx.lineTo(pixelX, pixelY);
+                    }
+                }
+            }
+            
+            ctx.stroke();
+        }
+
+        function drawIntercept(point, label) {
+            if (!visibility.intercepts) return;
+            
+            const pixelX = centerX + point[0] * scale;
+            const pixelY = centerY - point[1] * scale;
+            
+            // Draw point
+            ctx.fillStyle = '#f39c12';
+            ctx.beginPath();
+            ctx.arc(pixelX, pixelY, 6, 0, 2 * Math.PI);
+            ctx.fill();
+            
+            // Draw border
+            ctx.strokeStyle = '#d35400';
+            ctx.lineWidth = 2;
+            ctx.stroke();
+            
+            // Draw label
+            ctx.fillStyle = '#333';
+            ctx.font = 'bold 12px Arial';
+            ctx.textAlign = 'center';
+            ctx.fillText(label, pixelX, pixelY - 12);
+        }
+
+        function draw() {
+            // Clear canvas
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Draw grid and axes
+            drawGrid();
+            drawAxes();
+            
+            // Draw lines
+            Object.keys(lines).forEach(drawLine);
+            
+            // Draw intercepts
+            if (visibility.intercepts) {
+                Object.keys(lines).forEach(lineKey => {
+                    if (visibility[lineKey]) {
+                        const line = lines[lineKey];
+                        drawIntercept(line.xIntercept, `(${line.xIntercept[0]}, ${line.xIntercept[1]})`);
+                        drawIntercept(line.yIntercept, `(${line.yIntercept[0]}, ${line.yIntercept[1]})`);
+                    }
+                });
+            }
+        }
+
+        function toggleLine(lineKey) {
+            visibility[lineKey] = !visibility[lineKey];
+            const btn = event.target;
+            btn.classList.toggle('active');
+            draw();
+        }
+
+        function toggleIntercepts() {
+            visibility.intercepts = !visibility.intercepts;
+            const btn = event.target;
+            btn.classList.toggle('active');
+            draw();
+        }
+
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            draw();
+        });
+
+        // Initial draw
+        draw();
+    </script>
+</body>
+</html>
