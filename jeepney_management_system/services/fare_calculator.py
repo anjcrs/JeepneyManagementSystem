@@ -1,5 +1,6 @@
-from jeepney_management_system.config import Config
+from config import Config
 from typing import Optional
+
 
 class FareCalculator:
     """Handles fare calculations and validations"""
