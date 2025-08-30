@@ -9,7 +9,7 @@ from models.transaction import Transaction
 from utils.validators import InputValidator
 
 class DriverInterface:
-    """Command-line interface for jeepney drivers"""
+    # CLI for the Driver
     
     def __init__(self):
         self.fare_calculator = FareCalculator()
