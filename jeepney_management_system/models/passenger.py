@@ -23,5 +23,5 @@ class Passenger:
         """Get travel duration in minutes"""
         if hasattr(self, 'alighting_time'):
             duration = (self.alighting_time - self.boarding_time).total_seconds()
-            return duration / 60  # Convert to minutes
+            return duration / 60  # Converts to minutes
         return None
