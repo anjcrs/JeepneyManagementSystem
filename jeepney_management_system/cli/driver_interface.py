@@ -21,7 +21,7 @@ class DriverInterface:
     
     def run(self):
         """Main driver interface loop"""
-        print("🚌 Jeepney Driver System")
+        print("Jeepney Driver System")
         print("=" * 30)
         
         # Initialize jeepney
@@ -42,15 +42,15 @@ class DriverInterface:
             elif choice == "5":
                 self.view_transaction_log()
             elif choice == "6":
-                print("👋 Thank you for using the system!")
+                print("Thank you for using the system!")
                 break
             else:
-                print("❌ Invalid choice. Please try again.")
+                print("Invalid choice. Please try again.")
     
     def show_main_menu(self):
         """Display main menu options"""
         print("\n" + "="*40)
-        print("📋 DRIVER MENU")
+        print("DRIVER MENU")
         print("="*40)
         print("1. 🧑‍🤝‍🧑 Process New Passenger")
         print("2. 🚶‍♂️ Passenger Alighting")
@@ -91,7 +91,7 @@ class DriverInterface:
         
         # Check capacity
         if self.current_jeepney.get_current_occupancy() >= self.current_jeepney.capacity:
-            print("❌ Jeepney is at full capacity!")
+            print("Jeepney is at full capacity!")
             return
         
         # Get passenger details
@@ -140,10 +140,10 @@ class DriverInterface:
             
             # Handle overpayment (ask for destination)
             if payment_result["status"] == "overpaid":
-                destination = input("🎯 Passenger destination (for change): ").strip()
+                destination = input("Passenger destination (for change): ").strip()
                 passenger.set_destination(destination)
                 transaction.destination = destination
-                print(f"💵 Change to give: ₱{payment_result['change']:.2f}")
+                print(f"Change to give: ₱{payment_result['change']:.2f}")
             
             # Add to jeepney
             self.current_jeepney.add_passenger(passenger, transaction)
@@ -155,7 +155,7 @@ class DriverInterface:
             print(f"📊 Current occupancy: {self.current_jeepney.get_current_occupancy()}/{self.current_jeepney.capacity}")
             
         except Exception as e:
-            print(f"❌ Error processing passenger: {str(e)}")
+            print(f"Error processing passenger: {str(e)}")
     
     def get_passenger_type(self) -> str:
         """Get and validate passenger type"""
@@ -171,9 +171,9 @@ class DriverInterface:
                 if 1 <= choice <= 4:
                     return valid_types[choice - 1]
                 else:
-                    print("❌ Invalid choice. Please select 1-4.")
+                    print("Invalid choice. Please select 1-4.")
             except ValueError:
-                print("❌ Please enter a valid number.")
+                print("Please enter a valid number.")
     
     def get_payment_amount(self) -> float:
         """Get and validate payment amount"""
@@ -181,11 +181,11 @@ class DriverInterface:
             try:
                 amount = float(input("💵 Amount paid: ₱"))
                 if amount < 0:
-                    print("❌ Amount cannot be negative.")
+                    print("Amount cannot be negative.")
                     continue
                 return amount
             except ValueError:
-                print("❌ Please enter a valid amount.")
+                print("Please enter a valid amount.")
     
     def passenger_alighting(self):
         """Handle passenger getting off the jeepney"""
@@ -193,7 +193,7 @@ class DriverInterface:
         print("-" * 20)
         
         if not self.current_jeepney.current_passengers:
-            print("❌ No passengers currently on board!")
+            print("No passengers currently on board!")
             return
         
         # Show current passengers
@@ -224,9 +224,9 @@ class DriverInterface:
                 print(f"✅ Passenger {passenger.passenger_id} has alighted!")
                 print(f"📊 Current occupancy: {self.current_jeepney.get_current_occupancy()}/{self.current_jeepney.capacity}")
             else:
-                print("❌ Invalid passenger selection.")
+                print("Invalid passenger selection.")
         except ValueError:
-            print("❌ Please enter a valid number.")
+            print("Please enter a valid number.")
     
     def view_current_status(self):
         """Display current jeepney status"""
@@ -234,7 +234,7 @@ class DriverInterface:
         print("=" * 30)
         
         if not self.current_jeepney:
-            print("❌ No jeepney configured!")
+            print("No jeepney configured!")
             return
         
         # Basic info
@@ -274,7 +274,7 @@ class DriverInterface:
         print("=" * 25)
         
         if not self.current_jeepney.daily_transactions:
-            print("❌ No transactions recorded today!")
+            print("No transactions recorded today!")
             return
         
         transactions = self.current_jeepney.daily_transactions
@@ -326,7 +326,7 @@ class DriverInterface:
         print("=" * 50)
         
         if not self.current_jeepney.daily_transactions:
-            print("❌ No transactions recorded!")
+            print("No transactions recorded!")
             return
         
         print(f"{'Time':<8} {'ID':<8} {'Type':<8} {'Fare':<6} {'Paid':<6} {'Change':<6} {'Location':<15}")
@@ -422,9 +422,9 @@ class DriverInputValidator:
                 if choice in valid_range:
                     return choice
                 else:
-                    print(f"❌ Please enter a number between {min(valid_range)} and {max(valid_range)}.")
+                    print(f"Please enter a number between {min(valid_range)} and {max(valid_range)}.")
             except ValueError:
-                print("❌ Please enter a valid number.")
+                print("Please enter a valid number.")
     
     @staticmethod
     def get_valid_amount(prompt: str, min_amount: float = 0) -> float:
@@ -435,9 +435,9 @@ class DriverInputValidator:
                 if amount >= min_amount:
                     return amount
                 else:
-                    print(f"❌ Amount must be at least ₱{min_amount:.2f}")
+                    print(f"Amount must be at least ₱{min_amount:.2f}")
             except ValueError:
-                print("❌ Please enter a valid amount (e.g., 15.00)")
+                print("Please enter a valid amount (e.g., 15.00)")
     
     @staticmethod
     def confirm_action(prompt: str) -> bool:
@@ -449,4 +449,4 @@ class DriverInputValidator:
             elif response in ['n', 'no']:
                 return False
             else:
-                print("❌ Please enter 'y' for yes or 'n' for no.")
+                print("Please enter 'y' for yes or 'n' for no.")
