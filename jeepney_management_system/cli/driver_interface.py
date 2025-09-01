@@ -85,7 +85,7 @@ class DriverInterface:
         print(f"👨‍✈️ Driver: {driver_name}")
     
     def process_passenger(self):
-        """Process new passenger boarding"""
+        # Process new passenger boarding
         print("\nNew Passenger Boarding")
         print("-" * 45)
         
@@ -158,7 +158,7 @@ class DriverInterface:
             print(f"Error processing passenger: {str(e)}")
     
     def get_passenger_type(self) -> str:
-        """Get and validate passenger type"""
+        # Get and validate passenger type
         valid_types = ["regular", "student", "senior", "pwd"]
         
         while True:
@@ -188,7 +188,7 @@ class DriverInterface:
                 print("Please enter a valid amount.")
     
     def passenger_alighting(self):
-        """Handle passenger getting off the jeepney"""
+        # Handle passenger getting off the jeepney
         print("\nPassenger Alighting")
         print("-" * 20)
         
@@ -229,7 +229,7 @@ class DriverInterface:
             print("Please enter a valid number.")
     
     def view_current_status(self):
-        """Display current jeepney status"""
+        # Display current jeepney status
         print("\nCurrent Status")
         print("=" * 30)
         
@@ -269,7 +269,7 @@ class DriverInterface:
                 print(f"   {ptype.title()}: {count}")
     
     def view_daily_summary(self):
-        """Display daily summary and analytics"""
+        # Display daily summary and analytics
         print("\nDaily Summary")
         print("=" * 45)
         
@@ -321,7 +321,7 @@ class DriverInterface:
         print(f"\n💡 Payment Efficiency: {efficiency:.1f}% exact payments")
     
     def view_transaction_log(self):
-        """Display transaction history"""
+        # Display transaction history
         print("\nTransaction Log")
         print("=" * 50)
         
@@ -351,7 +351,7 @@ class DriverInterface:
         print(f"Net Revenue: ₱{total_revenue - total_change:.2f}")
     
     def show_current_passengers(self):
-        """Display currently boarded passengers (helper method)"""
+        # Display currently boarded passengers (helper method)
         if not self.current_jeepney.current_passengers:
             print("No passengers currently on board.")
             return
@@ -406,7 +406,7 @@ class DisplayHelper:
     
     @staticmethod
     def format_time(dt: datetime) -> str:
-        """Format datetime for display"""
+        # Format datetime for display 
         return dt.strftime("%H:%M:%S")
 
 # Enhanced input validation for better UX
