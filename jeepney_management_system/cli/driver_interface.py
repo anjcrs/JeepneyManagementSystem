@@ -151,8 +151,8 @@ class DriverInterface:
             # Save to database (in real implementation)
             # self.transaction_queries.save_transaction(transaction)
             
-            print(f"✅ Passenger {passenger_id} added successfully!")
-            print(f"📊 Current occupancy: {self.current_jeepney.get_current_occupancy()}/{self.current_jeepney.capacity}")
+            print(f"Passenger {passenger_id} added successfully!")
+            print(f"Current occupancy: {self.current_jeepney.get_current_occupancy()}/{self.current_jeepney.capacity}")
             
         except Exception as e:
             print(f"Error processing passenger: {str(e)}")
@@ -176,10 +176,10 @@ class DriverInterface:
                 print("Please enter a valid number.")
     
     def get_payment_amount(self) -> float:
-        """Get and validate payment amount"""
+        # Get and validate payment amount
         while True:
             try:
-                amount = float(input("💵 Amount paid: ₱"))
+                amount = float(input("Amount paid: ₱"))
                 if amount < 0:
                     print("Amount cannot be negative.")
                     continue
@@ -189,7 +189,7 @@ class DriverInterface:
     
     def passenger_alighting(self):
         """Handle passenger getting off the jeepney"""
-        print("\n🚶‍♂️ Passenger Alighting")
+        print("\nPassenger Alighting")
         print("-" * 20)
         
         if not self.current_jeepney.current_passengers:
@@ -197,7 +197,7 @@ class DriverInterface:
             return
         
         # Show current passengers
-        print("\n👥 Current Passengers:")
+        print("\nCurrent Passengers:")
         for i, passenger in enumerate(self.current_jeepney.current_passengers, 1):
             boarding_time = passenger.boarding_time.strftime("%H:%M")
             print(f"{i}. ID: {passenger.passenger_id} | "
