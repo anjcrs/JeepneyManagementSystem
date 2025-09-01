@@ -211,7 +211,7 @@ class DriverInterface:
                 passenger = self.current_jeepney.current_passengers[choice - 1]
                 
                 # Optional: Record alighting location
-                alighting_location = input("📍 Alighting location (optional): ").strip()
+                alighting_location = input("Alighting location (optional): ").strip()
                 if alighting_location:
                     passenger.destination = alighting_location
                 
@@ -230,7 +230,7 @@ class DriverInterface:
     
     def view_current_status(self):
         """Display current jeepney status"""
-        print("\n📊 Current Status")
+        print("\nCurrent Status")
         print("=" * 30)
         
         if not self.current_jeepney:
@@ -248,30 +248,30 @@ class DriverInterface:
         capacity = self.current_jeepney.capacity
         occupancy_percent = (occupancy / capacity) * 100
         
-        print(f"\n👥 Passengers: {occupancy}/{capacity} ({occupancy_percent:.1f}%)")
+        print(f"\nPassengers: {occupancy}/{capacity} ({occupancy_percent:.1f}%)")
         
         # Revenue summary
         daily_revenue = self.current_jeepney.get_daily_revenue()
         transaction_count = len(self.current_jeepney.daily_transactions)
         
-        print(f"💰 Daily Revenue: ₱{daily_revenue:.2f}")
-        print(f"📋 Transactions: {transaction_count}")
+        print(f"Daily Revenue: ₱{daily_revenue:.2f}")
+        print(f"Transactions: {transaction_count}")
         
         if transaction_count > 0:
             avg_fare = daily_revenue / transaction_count
-            print(f"📊 Average Fare: ₱{avg_fare:.2f}")
+            print(f"Average Fare: ₱{avg_fare:.2f}")
         
         # Passenger breakdown
         passenger_counts = self.current_jeepney.get_passenger_count()
-        print(f"\n📈 Passenger Breakdown:")
+        print(f"\nPassenger Breakdown:")
         for ptype, count in passenger_counts.items():
             if count > 0:
                 print(f"   {ptype.title()}: {count}")
     
     def view_daily_summary(self):
         """Display daily summary and analytics"""
-        print("\n📈 Daily Summary")
-        print("=" * 25)
+        print("\nDaily Summary")
+        print("=" * 45)
         
         if not self.current_jeepney.daily_transactions:
             print("No transactions recorded today!")
