@@ -20,7 +20,7 @@ class DriverInterface:
         self.current_jeepney = None
     
     def run(self):
-        """Main driver interface loop"""
+        # Main driver interface loop
         print("Jeepney Driver System")
         print("=" * 30)
         
