@@ -428,7 +428,7 @@ class DriverInputValidator:
     
     @staticmethod
     def get_valid_amount(prompt: str, min_amount: float = 0) -> float:
-        """Get a valid monetary amount"""
+        # Get a valid monetary amount
         while True:
             try:
                 amount = float(input(prompt))
@@ -441,12 +441,12 @@ class DriverInputValidator:
     
     @staticmethod
     def confirm_action(prompt: str) -> bool:
-        """Get yes/no confirmation"""
+        # Get yes/no confirmation
         while True:
             response = input(f"{prompt} (y/n): ").lower().strip()
-            if response in ['y', 'yes']:
+            if response in ['Y', 'Yes']:
                 return True
-            elif response in ['n', 'no']:
+            elif response in ['N', 'No']:
                 return False
             else:
-                print("Please enter 'y' for yes or 'n' for no.")
+                print("Please enter 'Y' for Yes or 'N' for No.")
