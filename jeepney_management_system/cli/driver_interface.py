@@ -86,7 +86,7 @@ class DriverInterface:
     
     def process_passenger(self):
         """Process new passenger boarding"""
-        print("\n🧑‍🤝‍🧑 New Passenger Boarding")
+        print("\nNew Passenger Boarding")
         print("-" * 45)
         
         # Check capacity
@@ -99,12 +99,12 @@ class DriverInterface:
         if not passenger_type:
             return
         
-        boarding_location = input("📍 Boarding location: ").strip()
+        boarding_location = input("Boarding location: ").strip()
         
         # Calculate fare
         try:
             required_fare = self.fare_calculator.calculate_fare(passenger_type)
-            print(f"💰 Required fare: ₱{required_fare:.2f}")
+            print(f"Required fare: ₱{required_fare:.2f}")
             
             # Get payment
             amount_paid = self.get_payment_amount()
@@ -115,7 +115,7 @@ class DriverInterface:
             payment_result = self.fare_calculator.validate_payment(required_fare, amount_paid)
             
             if not payment_result["valid"]:
-                print(f"❌ {payment_result['error']}")
+                print(f"{payment_result['error']}")
                 return
             
             # Create passenger and transaction
