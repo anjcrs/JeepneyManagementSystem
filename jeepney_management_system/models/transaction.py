@@ -3,8 +3,8 @@ from datetime import datetime
 from typing import Optional
 
 @dataclass
-class Transaction:
-    """Represents a fare transaction"""
+class Transactions:
+    # Represents a fare transactions
     transaction_id: str
     jeepney_id: str
     passenger_type: str
@@ -32,11 +32,11 @@ class Transaction:
             self.change_given = 0
     
     def is_valid_payment(self) -> bool:
-        """Check if payment is sufficient"""
+        # Check if payment is sufficient
         return self.amount_paid >= self.required_fare
     
     def get_transaction_summary(self) -> dict:
-        """Get transaction summary"""
+        # Get transaction summary
         return {
             "id": self.transaction_id,
             "type": self.passenger_type,
