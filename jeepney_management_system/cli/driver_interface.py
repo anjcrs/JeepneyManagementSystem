@@ -48,10 +48,10 @@ class DriverInterface:
                 print("Invalid choice. Please try again.")
     
     def show_main_menu(self):
-        """Display main menu options"""
+        # Display main menu options
         print("\n" + "="*40)
         print("DRIVER MENU")
-        print("="*40)
+        print("="*60)
         print("1. 🧑‍🤝‍🧑 Process New Passenger")
         print("2. 🚶‍♂️ Passenger Alighting")
         print("3. 📊 Current Status")
@@ -62,11 +62,11 @@ class DriverInterface:
         if self.current_jeepney:
             occupancy = self.current_jeepney.get_current_occupancy()
             capacity = self.current_jeepney.capacity
-            print(f"\n🚌 Current Passengers: {occupancy}/{capacity}")
+            print(f"\nCurrent Passengers: {occupancy}/{capacity}")
     
     def setup_jeepney(self):
-        """Setup current jeepney for the session"""
-        print("\n🚌 Jeepney Setup")
+        # Setup current jeepney for the session
+        print("\nJeepney Setup")
         plate_number = input("Enter jeepney plate number: ").strip().upper()
         driver_name = input("Enter driver name: ").strip()
         route_id = input("Enter route (e.g., 01A, 02B): ").strip().upper()
@@ -87,7 +87,7 @@ class DriverInterface:
     def process_passenger(self):
         """Process new passenger boarding"""
         print("\n🧑‍🤝‍🧑 New Passenger Boarding")
-        print("-" * 25)
+        print("-" * 45)
         
         # Check capacity
         if self.current_jeepney.get_current_occupancy() >= self.current_jeepney.capacity:
