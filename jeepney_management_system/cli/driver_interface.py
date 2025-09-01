@@ -305,11 +305,11 @@ class DriverInterface:
         # Busiest hours
         if hours:
             busiest_hour = max(hours.items(), key=lambda x: x[1]["count"])
-            print(f"⏰ Busiest Hour: {busiest_hour[0]:02d}:00 ({busiest_hour[1]['count']} passengers)")
+            print(f"Busiest Hour: {busiest_hour[0]:02d}:00 ({busiest_hour[1]['count']} passengers)")
         
         # Passenger type breakdown
         passenger_counts = self.current_jeepney.get_passenger_count()
-        print(f"\n📋 Passenger Types:")
+        print(f"\nPassenger Types:")
         for ptype, count in passenger_counts.items():
             if count > 0:
                 percentage = (count / total_passengers) * 100
@@ -322,7 +322,7 @@ class DriverInterface:
     
     def view_transaction_log(self):
         """Display transaction history"""
-        print("\n📒 Transaction Log")
+        print("\nTransaction Log")
         print("=" * 50)
         
         if not self.current_jeepney.daily_transactions:
@@ -353,10 +353,10 @@ class DriverInterface:
     def show_current_passengers(self):
         """Display currently boarded passengers (helper method)"""
         if not self.current_jeepney.current_passengers:
-            print("📭 No passengers currently on board.")
+            print("No passengers currently on board.")
             return
         
-        print(f"\n👥 Current Passengers ({len(self.current_jeepney.current_passengers)}):")
+        print(f"\nCurrent Passengers ({len(self.current_jeepney.current_passengers)}):")
         print("-" * 50)
         
         for i, passenger in enumerate(self.current_jeepney.current_passengers, 1):
@@ -371,7 +371,7 @@ class DriverInterface:
                 print(f"     To: {passenger.destination}")
     
     def quick_stats_display(self):
-        """Show quick stats in a compact format"""
+        # How quick stats in a compact format
         if not self.current_jeepney:
             return
         
@@ -379,29 +379,29 @@ class DriverInterface:
         daily_revenue = self.current_jeepney.get_daily_revenue()
         transaction_count = len(self.current_jeepney.daily_transactions)
         
-        print(f"📊 Quick Stats: {occupancy}/20 passengers | "
+        print(f"Quick Stats: {occupancy}/20 passengers | "
               f"₱{daily_revenue:.2f} revenue | "
               f"{transaction_count} trips")
 
 # Helper class for better user experience
 class DisplayHelper:
-    """Helper methods for improved console display"""
+    # Helper methods for improved console display
     
     @staticmethod
     def print_header(title: str, width: int = 40):
-        """Print a formatted header"""
+        # Print a formatted header
         print("\n" + "=" * width)
         print(f"{title:^{width}}")
         print("=" * width)
     
     @staticmethod
     def print_divider(char: str = "-", length: int = 30):
-        """Print a divider line"""
+        # Prints a divider line
         print(char * length)
     
     @staticmethod
     def format_currency(amount: float) -> str:
-        """Format currency for display"""
+        # Format currency for display
         return f"₱{amount:.2f}"
     
     @staticmethod
@@ -411,11 +411,11 @@ class DisplayHelper:
 
 # Enhanced input validation for better UX
 class DriverInputValidator:
-    """Enhanced input validation specifically for driver interface"""
+    # Enhanced input validation specifically for driver interface
     
     @staticmethod
     def get_valid_choice(prompt: str, valid_range: range) -> int:
-        """Get a valid integer choice within range"""
+        # Get a valid integer choice within range
         while True:
             try:
                 choice = int(input(prompt))
