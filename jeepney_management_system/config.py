@@ -23,7 +23,7 @@ class Config:
     WEB_HOST = '0.0.0.0'
     WEB_PORT = 5000
     
-    # Reporting
+    # Reportings
     REPORTS_DIR = "reports/"
     BACKUP_DIR = "backups/"
     
